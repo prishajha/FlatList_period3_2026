@@ -1,3 +1,5 @@
+import ListItemSeparator from "@/components/ListItemSeperator";
+import colors from "@/styles/colors";
 import defaultStyles from "@/styles/defaultStyles";
 import { useState } from "react";
 import {
@@ -55,9 +57,33 @@ export default function Index() {
             data={DATA}
             keyExtractor={(item: dataType) => item.id}
             extraData={selectedID}
+            ItemSeparatorComponent={() => <ListItemSeparator color={"blue"} />}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => selectedList(item)}>
-                <Text>{item.title}</Text>
+              <TouchableOpacity
+                onPress={() => selectedList(item)}
+                style={[
+                  styles.titleContainer,
+                  {
+                    backgroundColor:
+                      item.id === selectedID
+                        ? colors.primary
+                        : colors.secondary,
+                  },
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.titleText,
+                    {
+                      color:
+                        item.id === selectedID
+                          ? colors.text.light
+                          : colors.text.dark,
+                    },
+                  ]}
+                >
+                  {item.title}
+                </Text>
               </TouchableOpacity>
             )}
           />
