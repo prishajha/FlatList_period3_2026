@@ -1,14 +1,8 @@
+import ListItem from "@/components/ListItem";
 import ListItemSeparator from "@/components/ListItemSeperator";
-import colors from "@/styles/colors";
 import defaultStyles from "@/styles/defaultStyles";
 import { useState } from "react";
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 
 export default function Index() {
   //inside the curly brace and before the return
@@ -41,7 +35,7 @@ export default function Index() {
   //this simple function is called whenver the user clicks on the item
   //in FlatList
 
-  const selectedList = (item: dataType) => {
+  const handleRowPress = (item: dataType) => {
     setSelectedID(item.id);
     console.log(item.title);
   };
@@ -59,32 +53,11 @@ export default function Index() {
             extraData={selectedID}
             ItemSeparatorComponent={() => <ListItemSeparator color={"blue"} />}
             renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() => selectedList(item)}
-                style={[
-                  styles.titleContainer,
-                  {
-                    backgroundColor:
-                      item.id === selectedID
-                        ? colors.primary
-                        : colors.secondary,
-                  },
-                ]}
-              >
-                <Text
-                  style={[
-                    styles.titleText,
-                    {
-                      color:
-                        item.id === selectedID
-                          ? colors.text.light
-                          : colors.text.dark,
-                    },
-                  ]}
-                >
-                  {item.title}
-                </Text>
-              </TouchableOpacity>
+              <ListItem
+                item={item}
+                isSelected={item.id === selectedID}
+                onPress={handleRowPress}
+              />
             )}
           />
         </View>
@@ -96,15 +69,5 @@ export default function Index() {
 const styles = StyleSheet.create({
   flatlist: {
     alignItems: "center",
-  },
-  titleContainer: {
-    marginTop: 5,
-    width: 300,
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
-  },
-  titleText: {
-    fontSize: 24,
-    padding: 10,
   },
 });

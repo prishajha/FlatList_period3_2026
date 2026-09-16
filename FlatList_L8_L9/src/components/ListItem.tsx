@@ -1,27 +1,59 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import React from "react";
 import colors from "@/styles/colors";
+import React from "react";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
-// declare data type for props here
+//declrae the data type - this is reduandant we will
+//learn a better way later
 
-const ListItem = () => {
-  return <View></View>;
+type dataType = {
+  id: string;
+  title: string;
+};
+
+//declare our props data types
+
+type propsType = {
+  item: dataType;
+  isSelected: boolean;
+  onPress: (item: dataType) => void;
+};
+
+const ListItem: React.FC<propsType> = ({ item, isSelected, onPress }) => {
+  return (
+    <TouchableOpacity
+      onPress={() => onPress(item)}
+      style={[
+        styles.titleContainer,
+        {
+          backgroundColor: isSelected ? colors.primary : colors.secondary,
+        },
+      ]}
+    >
+      <Text
+        style={[
+          styles.titleText,
+          {
+            color: isSelected ? colors.text.light : colors.text.dark,
+          },
+        ]}
+      >
+        {item.title}
+      </Text>
+    </TouchableOpacity>
+  );
 };
 
 export default ListItem;
 
 const styles = StyleSheet.create({
-  list: {
-    backgroundColor: colors.secondary,
-    padding: 5,
-    height: 60,
-    width: 350,
+  titleContainer: {
+    marginTop: 5,
+    width: 300,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
-    marginTop: 5,
   },
-  text: {
-    color: colors.text.dark,
-    fontSize: 20,
+  titleText: {
+    fontSize: 24,
+    padding: 10,
   },
 });
